@@ -5,15 +5,15 @@ import ResultItem from './ResultItem';
 
 class ResultsList extends React.Component{
     render(){
-        
+        //console.log('res', this.props.results[0].props)
         const books = this.props.results;
-        const resultsList = Object.keys(books.results)
+        const resultsList = Object.keys(books)
         .map(key => <ResultItem 
                             className="result-item"
-                            name={books.results[key].name}
-                            author={books.results[key].author}
-                            summary={books.results[key].summary}
-                            price={books.results[key].price}
+                            name={books[key].name}
+                            author={books[key].author}
+                            summary={books[key].summary}
+                            price={books[key].price}
                             key={key}/>)
         return(
             <ul className="results-list">

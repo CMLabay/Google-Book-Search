@@ -2,41 +2,50 @@ import React from 'react';
 import './App.css';
 import SearchBar from './SearchBar';
 import ResultsList from './ResultsList';
+import ResultItem from './ResultItem';
 
 class App extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-          searchValue: 'butts',
+          searchText: '',
+          filterB: '&filter=full',
+          filterP: '&printType=all',
           results: [{
-              name: "Henry I",
-              author: "Warren Hollister",
-              price: 50.00,
-              summary: "The resulting volume is one that will be welcomed by students and general readers alike.",
-              picture: ""
+              key:'',
+              name: "",
+              author: "",
           },
-              {
-              name: "Henry VIII",
-              author: "Alison Weir",
-              price: 15.50,
-              summary: "This is a triumph of historical writing which will appeal equally to the general reader and the serious historian.",
-              picture: ""
-              }
             ],
         };
       }
-      handleSearch(e) {
-          console.log('seeeeeeeaaaaaarrrrcccchhhh')
+      handleSearch = (e) => {
           e.preventDefault();
+          const searchURL = this.props.url+this.state.searchText+this.state.filterP+this.state.filterB+this.props.apiKey;
+          fetch(searchURL)
+          .then(response => response.json())
+          .then(data => {
+              const results = Object.keys(data.items)
+                    .map(key => <ResultItem
+                                    key={key}
+                                    name = {data.items[key].volumeInfo.title}
+                                    author={data.items[key].volumeInfo.authors}
+                                    />)
+              this.setState({results})
+              console.log('result',results)
+          })
       }
-      handleTextChange(text){
-        console.log('chhange text', text);   
+      handleTextChange = (text) => {
+        console.log('chhange text', text); 
+        this.setState({searchText:"q="+text})
       }
-      filterPrint(printType){
+      filterPrint = (printType) => {
           console.log('print type ', printType)
+          this.setState({filterP:"&printType="+printType})
       }
-      filterBook(bookType){
+      filterBook = (bookType) => {
           console.log('book type', bookType)
+          this.setState({filterB:"&filter="+bookType})
       }
     render(){
         return(
@@ -47,7 +56,7 @@ class App extends React.Component{
                     onChange={this.handleTextChange}
                     onPrintChange={this.filterPrint}
                     onBookChange={this.filterBook} />
-                <ResultsList results={this.state} />
+                <ResultsList results={this.state.results} />
             </section>
         );
     }
