@@ -5,9 +5,8 @@ import ResultItem from './ResultItem';
 
 class ResultsList extends React.Component{
     render(){
-        //console.log('res', this.props.results[0].props)
         const books = this.props.results;
-        const resultsList = Object.keys(books)
+       /* const resultsList = Object.keys(books)
         .map(key => <ResultItem 
                             className="result-item"
                             name={books[key].name}
@@ -15,9 +14,9 @@ class ResultsList extends React.Component{
                             summary={books[key].summary}
                             price={books[key].price}
                             key={key}/>)
+        console.log('res', books[0].name)*/
         return(
             <ul className="results-list">
-                {resultsList}
             </ul>
         )
     }

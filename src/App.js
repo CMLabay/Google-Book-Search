@@ -12,9 +12,9 @@ class App extends React.Component{
           filterB: '&filter=full',
           filterP: '&printType=all',
           results: [{
-              key:'',
-              name: "",
-              author: "",
+              key:null,
+              name: null,
+              author: null,
           },
             ],
         };
@@ -25,26 +25,35 @@ class App extends React.Component{
           fetch(searchURL)
           .then(response => response.json())
           .then(data => {
-              const results = Object.keys(data.items)
-                    .map(key => <ResultItem
-                                    key={key}
-                                    name = {data.items[key].volumeInfo.title}
-                                    author={data.items[key].volumeInfo.authors}
-                                    />)
-              this.setState({results})
-              console.log('result',results)
+              
+             /* const results = Object.keys(data.items)
+                    .map(key => {
+                    this.setState({
+                        results: [this.state.results.key, key],
+                        results: [this.state.results.name, data.items[key].volumeInfo.title], 
+                        results: [this.state.results.author, data.items[key].volumeInfo.authors] 
+                    })
+                    })*/
+            for(let i = 0;i<data.items.length;i++){
+                this.setState({
+                    results: [this.state.results.key, i],
+                    results: [this.state.results.name, data.items[i].volumeInfo.title], 
+                    results: [this.state.results.author, data.items[i].volumeInfo.authors]  
+                 })
+                 console.log('res', this.state.results)
+                 console.log('tit', data.items[i].volumeInfo.title)
+                 console.log('aut', data.items[i].volumeInfo.authors)
+            }
+            
           })
       }
       handleTextChange = (text) => {
-        console.log('chhange text', text); 
         this.setState({searchText:"q="+text})
       }
       filterPrint = (printType) => {
-          console.log('print type ', printType)
           this.setState({filterP:"&printType="+printType})
       }
       filterBook = (bookType) => {
-          console.log('book type', bookType)
           this.setState({filterB:"&filter="+bookType})
       }
     render(){

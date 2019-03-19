@@ -5,7 +5,6 @@ import Filter from './Filter';
 class SearchBar extends React.Component{
 
     render(){
-        console.log('func', this.props.onSearch)
         return(
             <section>   
                 <SearchInput 

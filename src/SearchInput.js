@@ -3,7 +3,6 @@ import './SearchInput.css';
 
 class SearchInput extends React.Component{
     render(){
-        console.log('func', this.props.onChange)
         return(
             <form onSubmit={this.onSubmitForm}>
                 <label htmlFor="search">Search:</label>
